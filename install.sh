@@ -5,7 +5,6 @@ echo "=== Kaas Bootstrap ==="
 
 sudo apt update && sudo apt install -y git curl wget zsh build-essential
 
-
 mkdir -p ~/projects ~/opt ~/.local/bin ~/.config
 
 if [[ ! -d "$HOME/kaas" ]]; then
