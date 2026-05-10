@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+KAAS_ROOT="${KAAS_ROOT:=$HOME/kaas}"
+cd "$KAAS_ROOT" || { echo "kaas root not found"; exit 1; }
+
+source lib/utils.sh
+
+case "$1" in
+    init|install|bootstrap)
+        ./install.sh
+        ;;
+    update|sync)
+        ./update.sh
+        ;;
+    install-module|add)
+        shift
+        modules/"$1".sh || echo "Module $1 not found"
+        ;;
+    *)
+        echo "Kaas - Kairos' Awesome Automated System"
+        echo "Usage: kaas [init|update|install-module <name>]"
+        ;;
+esac
