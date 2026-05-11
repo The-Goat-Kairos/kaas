@@ -2,7 +2,7 @@
 
 echo "Installing the Core"
 
-sudo apt install -y ripgreq jq fzf bat firefox discord tmux awk
+sudo apt install -y ripgreq jq fzf bat firefox discord tmux awk bear clangd mpv
 
 ln -s /usr/bin/batcat ~/.local/bin/bat
 
