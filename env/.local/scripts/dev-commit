@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+pushd ~/kaas/env/.config/nvim
+git add .
+git commit -m 'automated dev commit'
+git push
+popd
+
+pushd ~/kaas/tmux-sessionizer/
+git add .
+git commit -m 'automated dev commit'
+git push
+popd
+
+pushd ~/kaas
+git add .
+git commit -m 'automated dev commit'
+git push
+popd

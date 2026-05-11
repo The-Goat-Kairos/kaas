@@ -1,0 +1,93 @@
+# My dear proj command
+proj() {
+	if [[ -z "$1" ]]; then
+		cd "/home/kairos/Documents/Projects"
+	else
+		cd "/home/kairos/Documents/Projects/$1"
+	fi
+    ls
+}
+compdef _proj proj
+zstyle ':completion:*:cd:proj:*' tag-order local-directories format '%F{green}-- %d --%f'
+zstyle ':completion:*:cd:proj:*' local-directories /home/kairos/Projects format '%F{green}-- %d --%f'
+
+todo() {
+    if [[ "$1" == "-e" || "$1" == "--edit" ]]; then
+        nvim ~/todo.txt
+    else
+        cat ~/todo.txt
+    fi
+}
+
+addToPath() {
+    if [[ "$PATH" != *"$1"* ]]; then
+        export PATH=$PATH:$1
+    fi
+}
+
+addToPathFront() {
+    if [[ ! -z "$2" ]] || [[ "$PATH" != *"$1"* ]]; then
+        export PATH=$1:$PATH
+    fi
+}
+
+interfaces() {
+	node <<-EOF
+	var os = require('os');
+	var i = os.networkInterfaces();
+	Object.keys(i).forEach(function(name) {
+		i[name].forEach(function(int) {
+			if (int.family === 'IPv4') {
+				console.log('%s: %s', name, int.address);
+			}
+		});
+	});
+	EOF
+}
+
+colors() {
+	local i
+	for i in {0..255}; do
+		printf "\x1b[38;5;${i}mcolor %d\n" "$i"
+	done
+	tput sgr0
+}
+
+# Hacking in C supporting functions
+# Function that reverses the order of bytes on stdin
+revbytes () {
+	python3 -c "import sys;sys.stdout.buffer.write(sys.stdin.buffer.read()[::-1])"
+}
+
+# Function that parses a hexadecimal memory dump or argument back
+# into bytes and then hexdumps them for easier viewing.
+rexxd () {
+	if [ "$#" -gt 0 ]
+	then
+		printf %s "$@" | xxd -r -p | xxd
+	else
+		xxd -r -p | xxd
+	fi
+}
+
+# Function that parses a hexadecimal input or argument into bytes
+# and then outputs those bytes in reverse order.
+revaddr () {
+	if [ "$#" -gt 0 ]
+	then
+		printf %s "$@" | xxd -r -p | revbytes
+	else
+		xxd -r -p | revbytes
+	fi
+}
+
+# Function that repeats its first argument string N times
+# (N being its second argument).
+spamf () {
+	if [ "$#" -ne 2 ]
+	then
+		printf "Usage: spamf <formatstring> <count>\n" 1>&2
+	else
+		python3 -c "print(\"${1}\"*${2}, end=\"\")"
+	fi
+}
