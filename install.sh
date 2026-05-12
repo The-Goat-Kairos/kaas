@@ -6,7 +6,7 @@ echo "=== Kaas Bootstrap ==="
 # I would put these in scripts but I need them here
 sudo apt update && sudo apt install -y git curl wget zsh build-essential
 
-mkdir -p ~/projects ~/opt ~/.local/bin ~/.config
+mkdir -p ~/Projects ~/opt ~/.local/bin ~/.config
 
 touch ~/todo.txt
 

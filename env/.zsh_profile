@@ -1,9 +1,9 @@
 # My dear proj command
 proj() {
 	if [[ -z "$1" ]]; then
-		cd "/home/kairos/Documents/Projects"
+		cd "/home/kairos/Projects"
 	else
-		cd "/home/kairos/Documents/Projects/$1"
+		cd "/home/kairos/Projects/$1"
 	fi
     ls
 }
@@ -16,18 +16,6 @@ todo() {
         nvim ~/todo.txt
     else
         cat ~/todo.txt
-    fi
-}
-
-addToPath() {
-    if [[ "$PATH" != *"$1"* ]]; then
-        export PATH=$PATH:$1
-    fi
-}
-
-addToPathFront() {
-    if [[ ! -z "$2" ]] || [[ "$PATH" != *"$1"* ]]; then
-        export PATH=$1:$PATH
     fi
 }
 

@@ -6,8 +6,6 @@ sudo apt install -y zsh
 
 hash -r
 
-if [[ "$SHELL" != *zsh* ]]; then
-    sudo chsh -s "$(which zsh)" "$USER"
-fi
+sudo chsh -s "$(which zsh)"
 
 echo "ZSH module done."

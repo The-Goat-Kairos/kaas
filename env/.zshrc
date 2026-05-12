@@ -19,7 +19,6 @@ alias ':q'="exit"
 alias 'today'='date +"%A %d/%m/%Y %H:%M:%S %Z (%:z)"'
 
 # Stole these commands from ZSH
-alias -='cd -'
 alias ..='echo "cd .."; cd ..'
 alias ...=../..
 alias ....=../../..
@@ -46,12 +45,11 @@ fi
 # I have no idea if this works but something something fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-shopt -s cdspell
-shopt -s checkwinsize
-shopt -s extglob
-
-shopt -s autocd   2>/dev/null || true
-shopt -s dirspell 2>/dev/null || true
+setopt cdspell
+setopt checkwinsize
+setopt extendedglob
+setopt autocd
+setopt correct
 
 # ============================================================================
 # Terminal Styling
@@ -73,50 +71,45 @@ export LESS_TERMCAP_ZW=$'\e[75m'
 export MANPAGER='less'
 
 # Shamelessly stolen from Dave Eddy  (https://github.com/bahamas10/dotfiles)
-COLOR256=()
+typeset -A COLORS256
+typeset -a PROMPT_COLORS
 COLORS256[0]=$(tput setaf 1)
 COLORS256[256]=$(tput sgr0)
 COLORS256[257]=$(tput bold)
 
-PROMPT_COLORS=()
 set_prompt_colors() {
     local h=${1:-0}
-    local color=
-    local i=0
-    local j=0
-    for i in {22..231}; do
-        ((i % 30 == h)) || continue
+    local color i j=0
 
-        color=${COLOR256[$i]}
-        # cache the tput colors
-        if [[ -z $color ]]; then
+    for i in {22..231}; do
+        (( i % 30 == h )) || continue
+
+        if [[ -z $COLOR256[$i] ]]; then
             COLOR256[$i]=$(tput setaf "$i")
-            color=${COLOR256[$i]}
         fi
-        PROMPT_COLORS[$j]=$color
-        ((j++))
+        PROMPT_COLORS[$j]=$COLOR256[$i]
+        (( j++ ))
     done
 }
 
 # [(exit code)] <hostname> <uname> <cwd> [<git branch>]] $
 
 # Exit code of last process
-PS1='$(ret=$?;(($ret!=0)) && echo "\[${COLOR256[0]}\]($ret) \[${COLOR256[256]}\]")'
+PS1='$(ret=$?; (( ret != 0 )) && echo "%F{red}($ret)%f ")'
 
 # hostname
-PS1+='\[${PROMPT_COLORS[3]}\]\h '
-
+PS1+='%F{${PROMPT_COLORS[3]}}%m '
 # uname
-PS1+='\[${PROMPT_COLORS[2]}\]'"$(uname | tr '[:upper:]' '[:lower:]')"' '
-
+PS1+='%F{${PROMPT_COLORS[2]}}$(uname | tr "[:upper:]" "[:lower:]") '
 # cwd
-PS1+='\[${PROMPT_COLORS[5]}\]\w '
+PS1+='%F{${PROMPT_COLORS[5]}}%~ '
 
-# optional git branch
-PS1+='$(branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null); [[ -n $branch ]] && echo "\[${PROMPT_COLORS[2]}\](\[${PROMPT_COLORS[3]}\]git:$branch\[${PROMPT_COLORS[2]}\]) ")'
+# Git branch
+PS1+='$(branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null);
+       [[ -n $branch ]] && echo "%F{${PROMPT_COLORS[2]}}(%F{${PROMPT_COLORS[3]}}git:$branch%F{${PROMPT_COLORS[2]}}") ")'
 
-# Prompt Character
-PS1+='\[${PROMPT_COLORS[0]}\]\$\[${COLOR256[256]}\] '
+# Final $
+PS1+='%F{${PROMPT_COLORS[0]}}$ %f'
 
 set_prompt_colors_24
 # ============================================================================
@@ -125,6 +118,18 @@ set_prompt_colors_24
 
 # .zsh_profile holds all of my commands
 source ~/.zsh_profile
+
+addToPathFront() {
+    if [[ -n "$1" && ":$PATH:" != *":$1:"* ]]; then
+        export PATH="$1:$PATH"
+    fi
+}
+
+addToPath() {
+    if [[ -n "$1" && ":$PATH:" != *":$1:"* ]]; then
+        export PATH="$PATH:$1"
+    fi
+}
 
 # ============================================================================
 # Path Setup

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+shopt -s nullglob
 
 echo "=== Syncing Kaas Configs ==="
 
@@ -8,11 +9,11 @@ ENV_DIR="$HOME/kaas/env"
 # Symlink root dotfiles
 for file in "$ENV_DIR"/.[!.]*; do
     if [[ -f "$file" ]]; then
-        target="$HOME/$(basename "file")"
+        target="$HOME/$(basename "$file")"
         ln -sf "$file" "$target"
         echo "Linked $target"
     fi
-end
+done
 
 # Symlink .config contents
 if [[ -d "$ENV_DIR/.config" ]]; then
@@ -28,6 +29,7 @@ fi
 
 # Symlink .local contents
 if [[ -d "$ENV_DIR/.local" ]]; then
+    mkdir -p "$HOME/.local"
     rsync -av --ignore-existing "$ENV_DIR/.local/" "$HOME/.local/"
 fi
 
