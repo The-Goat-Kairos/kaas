@@ -79,3 +79,54 @@ spamf () {
 		python3 -c "print(\"${1}\"*${2}, end=\"\")"
 	fi
 }
+
+# Calculate average of input numbers:
+# $ cat data | avg
+avg() {
+    local f=${1:-1}
+    awk -F "${2:- }" "length(\$$f) { i+=1; sum+=\$$f; } END { print sum/i }"
+}
+
+# Add commas to given input number:
+# $ echo '100000 / 100000000' | commas
+# 100,000 / 100,000,000
+commas() {
+	sed -e :a -e 's/\(.*[0-9]\)\([0-9]\{3\}\)/\1,\2/;ta'
+}
+
+# Grab a field from given input
+# Adapted from http://www.brendangregg.com/Shell/field :
+# $ echo -e '  three    different\tcolumns ' | field 2
+field() {
+	awk -F "${2:- }" "{ print \$${1:-1} }"
+}
+
+# Finding the max of a list of numbers:
+# $ cat data.txt | field 2 | max
+max() {
+	local f=${1:-1}
+	awk -F "${2:- }" "
+	length(\$$f) {
+		if (max == \"\" || \$$f > max)
+			max = \$$f
+	}
+	END { print max; }"
+}
+
+# Finding the min of a list of numbers:
+# $ cat data.txt | field 2 | min
+min() {
+	local f=${1:-1}
+	awk -F "${2:- }" "
+	length(\$$f) {
+		if (min == \"\" || \$$f < min)
+			min = \$$f
+	}
+	END { print min; }"
+}
+
+# Get the total sum of numbers:
+# cat data.txt | field 3 | total
+total() {
+	awk -F "${2:- }" "{ s += \$${1:-1} } END { print s }"
+}
