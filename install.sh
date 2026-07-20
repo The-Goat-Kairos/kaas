@@ -4,23 +4,26 @@ set -euo pipefail
 echo "=== Kaas Bootstrap ==="
 
 # I would put these in scripts but I need them here
+echo "Installing essential programs"
 sudo apt update && sudo apt install -y git curl wget zsh build-essential
+echo "Done installing essentials"
 
+echo "Creating necessary folders"
 mkdir -p ~/Projects ~/opt ~/.local/bin ~/.config
+echo "Done reating necessary folders"
+
 
 touch ~/todo.txt
 
-if [[ ! -d "$HOME/kaas" ]]; then
-    git clone https://github.com/The-Goat-Kairos/kaas.git ~/kaas
-    cd ~/kaas
-fi
 
+# We're assuming we're in the ~/Kaas folder
 git submodule update --init --recursive
 
-for module in modules/*.sh; do
-    echo "Running Module: $module"
-    bash "$module"
-done
+
+echo "Installing programs"
+./installations.sh
+echo "Done installing programs"
+
 
 ./update.sh
 

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-echo "Installing the Core"
-
 sudo apt install -y jq fzf libx11-dev bat firefox discord tmux bear clangd mpv gdb
 
 ln -s /usr/bin/batcat ~/.local/bin/bat
@@ -16,4 +14,11 @@ cd gf
 ./build.sh
 popd
 
-echo "CORE module done."
+sudo apt install -y neovim lua5.1 luarocks
+sudo luarocks install luacheck
+
+sudo apt install -y zsh
+
+hash -r
+
+sudo chsh -s "$(which zsh)"
