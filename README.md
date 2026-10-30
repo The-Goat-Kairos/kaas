@@ -10,7 +10,7 @@ It must download all of the things I need (i.e. all apt programs; I have some ba
 I am considering trying to use 'apt' or another package manager less but for now we can ignore that.
 I want a folder, called 'env', which holds all of the configuration files I want on my system. These are things like:
 *current folder*/env/.zshrc would go to ~/.zshrc and ./env/.zsh_profile would go to \~/.zsh_profile.
-It will also contain a folder .config which holds itself all folders and files which should go into \~/.config (i.e. my tmux, mpv, clangd, etc). There can also be other folders like ./env/.local which should go to \~/.local.
+It will also contain a folder .config which holds itself all folders and files which should go into \~/.config (i.e. my tmux, mpv, clangd, etc). There can also be other folders like ./env/.local which should go to ~/.local.
 
 ./env/.config/nvim is a git submodule (https://github.com/The-Goat-Kairos/nvim-config) so it is a seperate repo that I push and commit to seperately so we have to take that into account
 
