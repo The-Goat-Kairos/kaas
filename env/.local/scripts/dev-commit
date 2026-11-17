@@ -6,11 +6,12 @@ git commit -m 'automated dev commit'
 git push
 popd
 
-pushd ~/kaas/tmux-sessionizer/
-git add .
-git commit -m 'automated dev commit'
-git push
-popd
+# I don't update tmux sessionizer it should be fineeeeeeeeeee
+# pushd ~/kaas/tmux-sessionizer/
+# git add .
+# git commit -m 'automated dev commit'
+# git push
+# popd
 
 pushd ~/kaas
 git add .

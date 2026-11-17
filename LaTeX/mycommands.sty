@@ -1,0 +1,249 @@
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{algpseudocode}
+\usepackage{stmaryrd}
+\usepackage{xspace}
+\usepackage{listings}
+\usepackage{amssymb}
+\usepackage{MnSymbol}
+\RequirePackage{tikz}% For drawing the upside-down trapeziums
+\usetikzlibrary{shapes}% Otherwise tikz doesn't know what a trapezium is
+\RequirePackage{tikzbricks}% For getting the lego bricks
+\usepackage{graphicx} % Required for inserting images
+\usepackage{xcolor}
+\definecolor{rured}{rgb}{0.8,0.0,0.0}
+\newcommand{\red}[1]{\color{red}#1\color{black}}
+
+% General Mathematics
+% Sets
+\newcommand{\set}[1]{\left\{{#1}\right\}}
+\newcommand{\setbuild}[2]{\set{{#1}\mid{#2}}}
+\newcommand{\seq}[1]{\left\{{#1}\right\}}
+\newcommand{\code}[1]{\texttt{#1}}
+
+\newcommand{\TT}{\ensuremath{\mathbb{T}}\xspace}
+\newcommand{\FF}{\ensuremath{\mathbb{F}}\xspace}
+\newcommand{\NN}{\ensuremath{\mathbb{N}}\xspace}
+\newcommand{\NNp}{\ensuremath{\mathbb{N}^{+}}\xspace}
+\newcommand{\ZZ}{\ensuremath{\mathbb{Z}}\xspace}
+\newcommand{\ZZp}{\ensuremath{\mathbb{Z}^{+}}\xspace}
+\newcommand{\ZZn}{\ensuremath{\mathbb{Z}^{-}}\xspace}
+\newcommand{\QQ}{\ensuremath{\mathbb{Q}}\xspace}
+\newcommand{\QQp}{\ensuremath{\mathbb{Q}^{+}}\xspace}
+\newcommand{\QQn}{\ensuremath{\mathbb{Q}^{-}}\xspace}
+\newcommand{\RR}{\ensuremath{\mathbb{R}}\xspace}
+\newcommand{\RRp}{\ensuremath{\mathbb{R}^{+}}\xspace}
+\newcommand{\RRn}{\ensuremath{\mathbb{R}^{-}}\xspace}
+\newcommand{\CC}{\ensuremath{\mathbb{C}}\xspace}
+\newcommand{\EE}{\ensuremath{\mathds{E}}}
+\newcommand{\euclideanplane}{\ensuremath{\EE}}
+
+% Geometry
+\newcommand{\RRs}{\ensuremath{\mathbb{R}^{2}}}
+\newcommand{\RRc}{\ensuremath{\mathbb{R}^{3}}}
+\newcommand{\projective}{\ensuremath{\mathbb{P} \left( \RRc \right)}}
+
+% Functions and operations
+\newcommand{\abs}[1]{\ensuremath{\left|\, #1 \,\right|}}
+\newcommand{\floor}[1]{\ensuremath{\left\lfloor\, #1 \,\right\rfloor}}
+\newcommand{\ceil}[1]{\ensuremath{\left\lceil\, #1 \,\right\rceil}}
+\renewcommand{\powerset}[1]{\ensuremath{{\cal P}\left({#1}\right)}}
+
+\def\stirling#1#2{\genfrac\{\}{0pt}{}{#1}{#2}}
+\def\binomial#1#2{\genfrac(){0pt}{}{#1}{#2}}
+
+\newcommand{\Tt}{\ensuremath{\mathrm T}}
+\newcommand{\Ff}{\ensuremath{\mathrm F}}
+
+\newcommand{\lif}[0]{\ensuremath{\rightarrow}} % This just adds an equivalent for \land and \lor and stuff lol
+\newcommand{\req}[0]{\ensuremath{\approx}} % This just adds an equivalent for \eq, \leq, \geq for approximately equals (Roughly EQuals)
+
+\DeclareMathOperator{\tdiv}{div}
+\DeclareMathOperator{\tmod}{mod}
+
+% Induction
+\newcommand\iheq{\stackrel{\mathclap{\normalfont\mbox{IH}}}{=}}     % Induction Hypothesis Equal
+\newcommand\ihreq{\stackrel{\mathclap{\normalfont\mbox{IH}}}{\approx}}     % Induction Hypothesis Roughly Equal
+\newcommand\ihleq{\stackrel{\mathclap{\normalfont\mbox{IH}}}{\leq}} % Induction Hypothesis Less Than or Equal
+\newcommand\ihgeq{\stackrel{\mathclap{\normalfont\mbox{IH}}}{\geq}} % Induction Hypothesis Greater Than or Equal
+
+% General Ease of Use
+\newcommand{\q}{\quad}
+\newcommand{\qq}{\qquad}
+\newcommand{\p}{\\[0.5em]}
+\newcommand{\pp}{\\[1em]}
+
+% Homework
+\newcommand{\exercise}[2]{\subsection*{Exercise #1}{#2}}
+\newcommand{\exerciseenum}[2]{
+  \subsection*{Exercise #1}
+  \begin{enumerate}[label=\alph*)]
+    #2
+  \end{enumerate}
+}
+
+% Complexity
+\newcommand{\bigoh}[1]{\ensuremath{\mathcal{O}(#1)}}
+\newcommand{\bigtheta}[1]{\ensuremath{\Theta(#1)}}
+\newcommand{\bigomega}[1]{\ensuremath{\Omega(#1)}}
+\newcommand{\NP}[0]{\textbf{NP}\xspace}
+\newcommand{\NPH}[0]{\textbf{NPH}\xspace}
+
+% Semantics and Correctness (By Engelbert Hubbers)
+% Language Names
+\newcommand{\mwhile}{{\bf While}\xspace}
+\newcommand{\mwhileplus}{{\bf While}$^{+}$\xspace}
+\newcommand{\mwhilestar}{{\bf While}$^{\star}$\xspace}
+\newcommand{\mblock}{{\bf Block}\xspace}
+\newcommand{\mproc}{{\bf Proc}\xspace}
+
+
+% Other
+\newcommand{\true}{\mbox{\texttt{true}}\xspace}
+\newcommand{\false}{\mbox{\texttt{false}}\xspace}
+\newcommand{\tr}{\mbox{\textbf{tt}}\xspace}
+\newcommand{\fa}{\mbox{\textbf{ff}}\xspace}
+\newcommand{\integer}[1]{\textbf{#1}\xspace}
+\newcommand{\syntax}[1]{\left\llbracket #1 \right\rrbracket}
+\newcommand{\grammar}[2]{\ensuremath{#1 \; ::= \q #2}}
+\newcommand{\alt}{\;\mid\;}
+
+% States
+\newcommand{\conf}[2]{\ensuremath{\left\langle #1, #2 \right\rangle}}
+\newcommand{\confIII}[3]{\ensuremath{\langle{#1},{#2},{#3}\rangle}}
+\newcommand{\confIV}[4]{\ensuremath{\langle{#1},{#2},{#3},{#4}\rangle}}
+
+\newcommand{\nstrans}[3]{\ensuremath{\conf{#1}{#2} \rightarrow {#3}}}
+\newcommand{\nstransIII}[4]{\ensuremath{\confIII{#1}{#2}{3} \rightarrow {#4}}}
+\newcommand{\nstransIV}[5]{\ensuremath{\conf{#1}{#2}{#3}{#4} \rightarrow {#5}}}
+
+\newcommand{\nswhile}[1]{\ensuremath{\nstrans{\code{while b do S}}{n}{#1}}}
+\newcommand{\nswhileII}[2]{\ensuremath{\nstrans{\code{while b do S}}{#1}{#2}}}
+
+
+% Syntax Evaluations
+\newcommand{\Aexpr}[1]{\ensuremath{\mathcal{A}\syntax{#1}}}
+\newcommand{\Aeval}[2]{\ensuremath{\Aexpr{#1}#2}} % Aeval{Syntax}{State}
+\newcommand{\Bexpr}[1]{\ensuremath{\mathcal{B}\syntax{#1}}}
+\newcommand{\Beval}[2]{\ensuremath{\Bexpr{#1}#2}} % Beval{Syntax}{State}
+\newcommand{\Nexpr}[1]{\ensuremath{\mathcal{N}\syntax{#1}}}
+
+% Variable Substitution in State
+\newcommand{\substitute}[1]{\ensuremath{\left[ #1 \right]}}
+\newcommand{\ssubsCont}[2]{\ensuremath{\substitute{#1 \mapsto #2}}}
+\newcommand{\ssubs}[3]{\ensuremath{{#1}\substitute{#2 \mapsto #3}}}
+% ssubsAcont : [#2 -> A[[#3]] #1 ]
+%            : [y  -> A[[a_0]] s ]
+\newcommand{\ssubsAcont}[3]{\ensuremath{\substitute{{#2} \mapsto \Aeval{#3}{#1}}}}
+\newcommand{\ssubsBcont}[3]{\ensuremath{\substitute{{#2} \mapsto \Beval{#3}{#1}}}}
+% ssubsA     : #1[#2 -> A[[#3 ]] #1 ] 
+%            :  s[y  -> A[[a_0]] s  ]
+\newcommand{\ssubsA}[3]{\ensuremath{{#1}\ssubsAcont{#1}{#2}{#3}}}
+\newcommand{\ssubsB}[3]{\ensuremath{{#1}\ssubsBcont{#1}{#2}{#3}}}
+\newcommand{\bracketssubsA}[3]{\left( \ssubsA{#1}{#2}{#3} \right)}
+\newcommand{\bracketssubsB}[3]{\left( \ssubsB{#1}{#2}{#3} \right)}
+
+
+% Types
+\newcommand{\Num}{\textbf{Num}\xspace}
+\newcommand{\Stm}{\textbf{Stm}\xspace}
+\renewcommand{\State}{\textbf{State}\xspace}
+\newcommand{\Decv}{\textbf{Dec}$_{\scriptsize\mbox{V}}$\xspace}
+\newcommand{\Decp}{\textbf{Dec}$_{\scriptsize\mbox{P}}$\xspace}
+\newcommand{\Pname}{\textbf{Pname}\xspace}
+\newcommand{\Lab}{\textbf{Lab}\xspace}
+\newcommand{\SLab}{\textbf{LABELS}\xspace}
+\newcommand{\Var}{\textbf{Var}\xspace}
+\newcommand{\Env}{\textbf{Env}\xspace}
+\newcommand{\Tree}{\textbf{Tree}\xspace}
+\newcommand{\Aexp}{\textbf{Aexp}\xspace}
+\newcommand{\Aexpf}{\ensuremath{\mathcal{A}}\xspace}
+\newcommand{\Bexp}{\textbf{Bexp}\xspace}
+\newcommand{\Bexpf}{\ensuremath{\mathcal{B}}\xspace}
+\newcommand{\T}{\textbf{T}\xspace}
+\newcommand{\Z}{\textbf{Z}\xspace}
+
+\newcommand{\stt}{\mbox{\bfseries tt}} % Used for the derivation rules
+\newcommand{\sff}{\mbox{\bfseries ff}} % Used for the derivation rules
+
+
+% Syntax
+% Standard While Statements
+\newcommand{\mtt}[1]{\texttt{\mbox{#1}}} % texttt family box so it won't break across lines
+
+\newcommand{\sass}[2]{#1:=#2}
+\newcommand{\sskip}{\mtt{skip}}
+\newcommand{\sbreak}{\mtt{break}}
+\newcommand{\scontinue}{\mtt{continue}}
+\newcommand{\scomp}[2]{{#1}\mtt{;~}{#2}}
+\newcommand{\sifthenelse}[3]{\mtt{if~}{#1}\mtt{~then~}{#2}\mtt{~else~}{#3}}
+\newcommand{\swhilesimple}{\mtt{while}}
+\newcommand{\swhile}[2]{\mtt{while~}{#1}\mtt{~do~}{#2}}
+\newcommand{\swhilenodo}[1]{\mtt{while~}{#1}}
+\newcommand{\srepeatuntil}[2]{\mtt{repeat~}{#1}\mtt{~until~}{#2}}
+\newcommand{\sdo}[1]{\mtt{do~}{#1}}
+\newcommand{\strycatch}[3]{\mtt{try~}{#1}\mtt{~catch~}{#2}\mtt{:}{#3}}
+\newcommand{\sthrow}[1]{\mtt{throw~}{#1}}
+\newcommand{\stry}{\mtt{try}}
+\newcommand{\strycatchsimple}{\mtt{try}-\mtt{catch}}
+\newcommand{\sthrowsimple}{\mtt{throw}}
+\newcommand{\scatch}{\mtt{catch}}
+\newcommand{\sfail}{\mtt{fail}}
+\newcommand{\stransaction}[1]{\mtt{transaction~}{#1}\mtt{~end}}
+\newcommand{\stransactionsimple}{\mtt{transaction}}
+
+% Standard While Arithmetic Expressions
+\newcommand{\anum}{\mtt{n}}
+\newcommand{\avar}{x}
+\newcommand{\aplus}[2]{#1 + #2}
+\newcommand{\atimes}[2]{#1 \filledstar 2}
+\newcommand{\aminus}[2]{#1 - #2}
+
+% Standard While Boolean Expressions
+\newcommand{\btrue}{\true}
+\newcommand{\bfalse}{\false}
+\newcommand{\beq}[2]{#1 = #2}
+\newcommand{\bleq}[2]{\ensuremath{#1 \leqslant #2}}
+\newcommand{\bneg}[1]{\neg #1}
+\newcommand{\band}[2]{#1 \land #2}
+% While+ (boolean plus)
+\newcommand{\bpand}[2]{#1 \code{ \&\& } #2}
+\newcommand{\bpor}[2]{#1 \code{ || } #2}
+
+
+% Standard While natural semantics
+% rname(III): [rule_{ns}^{tt/ff}] but mboxed to stay on one line
+\newcommand{\rname}[2]{\ensuremath{\left[\mbox{#1}_{\mbox{#2}}\right]}}
+\newcommand{\rnameIII}[3]{\ensuremath{\left[\mbox{#1}_{\mbox{#2}}^{#3}\right]}}
+
+\newcommand{\rnsunknown}{\left[ \mbox{\dots} \right]}
+\newcommand{\rnsass}{\rname{ass}{ns}}
+\newcommand{\rnsskip}{\rname{skip}{ns}}
+\newcommand{\rnscomp}{\rname{comp}{ns}}
+\newcommand{\rnsiftt}{\rnameIII{if}{ns}{\stt}}
+\newcommand{\rnsifff}{\rnameIII{if}{ns}{\sff}}
+\newcommand{\rnswhileff}{\rnameIII{while}{ns}{\sff}}
+\newcommand{\rnswhilett}{\rnameIII{while}{ns}{\stt}}
+\newcommand{\rnsrepeatuntilff}{\rnameIII{repeat-until}{ns}{\sff}}
+\newcommand{\rnsrepeatuntiltt}{\rnameIII{repeat-until}{ns}{\stt}}
+\newcommand{\rnsfortodoleq}{\rnameIII{for-to-do}{ns}{\mbox{\textbf{leq}}}}
+\newcommand{\rnsfortodogt}{\rnameIII{for-to-do}{ns}{\mbox{\bfseries gt}}}
+
+
+% Instant Derivation Trees
+\newcommand{\rulensskip}{%
+    \nstrans{\sskip}{s}{s}
+}
+\newcommand{\rulensass}{%
+    \nstrans{\sass{x}{a}}{s}{\ssubsA{s}{x}{a}}
+}
+
+% Lego blocks!!!
+\newcommand{\legoblockIId}[2][1cm]{%
+    \tdplotsetmaincoords{90}{180}%
+    \begin{tikzpicture}%
+    \brick[frontcolor=rured!25,xshift=1cm,yshift=-0.5cm,scale=0.5]{4}{2}
+    \node[xshift=0cm,yshift=-0.25cm,text width=#1,align=center,shape border rotate=180]{#2};% This is for the 2-d version.
+    \end{tikzpicture}%
+    \vspace*{-0.10cm}%
+}
