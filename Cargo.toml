@@ -7,3 +7,7 @@ authors = ["Kairos <kairosgoatnuisance@gmail.com>"]
 license = "GPLv3"
 
 [dependencies]
+anyhow = "1.0.104"
+clap = { version = "4.6.9", features = ["derive"] }
+dirs = "7.0.0"
+walkdir = "2.5.0"

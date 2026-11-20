@@ -20,19 +20,26 @@ Capabilities:
         - install lua5.1, neovim
         - Install zsh and change the shell
 
+        kaas init
+        kaas init --dirs(=true|false)       # Creates the directories
+        kaas init --installs(=true|false)   # Installs the applications
+        kaas init --package-manager=...     # Defines package manager, default being apt
+
     - Update script that will (kaas update):
         - Sync all of my configuration files, practically mapping ~/kaas/env to ~ and ~/kaas/env/.config to ~/.config et cetera.
         - This should depend on whether I actually made those folders
-        - kaas update # Does not check git before propagating changes
-        - kaas update --check # checks git before propagating changes
         - Use a yaml-like file specifying source, target and mode="copy" or "symlink"
-        - kaas env status # show missing or broken links or files
-        - kaas env apply # commits dev changes
+
+        - kaas env apply         # Propagates my env to their correct locations defined in yaml file
+        - kaas env status        # show missing or broken links or files
+        - kaas env commit        # commits dev changes
+        Maybe I will want more customization for this and more parameters
 
     - Command to manage my LaTeX files:
         - Symlink from ~/kaas/LaTeX to my current or specified directory
         - Update the symlinks?
         - Remove symlinks
+        Haven't yet determined how I want this to look
 
 
     - Music player as in ~/Music that lets me play music, loop music, play a random song, play random songs on loop until I exit
@@ -55,10 +62,11 @@ Capabilities:
         - kaas history
 
     - Later I want to be able to roll back versions
-        - kaas env diff
-        - kaas env apply
-        - kaas env rollback
+        - kaas get-update
+        - kaas git diff
+        - kaas git apply
+        - kaas git rollback
 
     - Later I might want to be able to control and operate virtual machines from here but that's too far
         - kaas host list
-        - kaast host status NAME
+        - kaas host status NAME
