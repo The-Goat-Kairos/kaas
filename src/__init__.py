@@ -1,1 +1,0 @@
-"""Personal system manager."""

@@ -1,0 +1,9 @@
+[package]
+name = "kaas"
+version = "0.1.0"
+edition = "2024"
+description = "Kairos' Awesome Automated System"
+authors = ["Kairos <kairosgoatnuisance@gmail.com>"]
+license = "GPLv3"
+
+[dependencies]
