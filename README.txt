@@ -13,9 +13,6 @@ Capabilities:
             - Create ~/projects, ~/opt, ~/testing, ~/.local/bin and ~/.config
             - git submodule update --init --recursive
         - ln -s /usr/bin/batcat ~/.local/bin/bat
-        - Install ripgrep:
-            curl -LO https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep_14.1.1-1_amd64.deb
-            sudo dpkg -i ripgrep_14.1.1-1_amd64.deb
         - clone nakst/gf.git and build it in ~/opt
         - install lua5.1, neovim
         - Install zsh and change the shell
@@ -47,6 +44,8 @@ Capabilities:
         - kaas net status
         - kaas net routes
         - kaas net check HOST
+
+    - MUSIC PLAYER
 
     - Diagnostics
         - kaas report # Collect a system snapshot
